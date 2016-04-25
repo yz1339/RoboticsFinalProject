@@ -33,7 +33,3 @@ def findThirdLine(l1,l2,angle):
 
 
 print(separation(190,500, 500,900))
-
-print ("A")
-print ("\tB"),
-print ("C")
