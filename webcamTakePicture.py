@@ -7,6 +7,6 @@ if s:    # frame captured without any errors
     imshow("cam-test",img)
     waitKey(0)
     destroyWindow("cam-test")
-    imwrite("chairLeg1.jpg",img) #save image
+    imwrite("test1.jpg",img) #save image
 
 
