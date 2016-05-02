@@ -83,7 +83,7 @@ class TetheredDriveApp():
             print('Oops', "You're already connected!")
             return
 
-        port = '/dev/ttyUSB0'
+        port = '/dev/tty.usbserial-DA01NPT0'
 
         try:
             connection = serial.Serial(port, baudrate=115200, timeout=1)
