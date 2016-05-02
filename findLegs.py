@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.misc import imresize
-
+import separation
 
 # For our matrix we are using 5 * 10 intervals
 img = cv2.imread('chairLeg1.jpg')
@@ -30,7 +30,7 @@ def vote(x1, y1):
 
 #cv2.imwrite('houghlines5.jpg',img)
 
-img = imresize(img,(480,640))
+# img = imresize(img,(480,640))
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 #gray = cv2.GaussianBlur(gray, (3, 3), 0)
@@ -90,13 +90,14 @@ print(topTen)
 print(topCX)
 print(topCY)
 
-
 # draw points out
 for i in range(0,10):
-	cv2.circle(img, (int(topCX[i]) * 10, int(topCY[i]) * 5), 5, (225,0,0), -1)
-	pass
-cv2.imshow('circle',img)
-cv2.waitKey(0)
+	x = int(topCX[i]) * 10
+	y = int(topCY[i]) * 5
+	cv2.circle(img, (x, y), 5, (225,0,0), -1)
+	print(separation.convert(x,y), x, y)
+	cv2.imshow('circle',img)
+	cv2.waitKey(0)
 
 
 
@@ -111,7 +112,7 @@ cv2.waitKey(0)
     #if(Angle == 0):
     #cv2.line(img, pt1, pt2, (0,0,255), 3)
 
-cv2.imwrite("temp.jpg", img)
+# cv2.imwrite("temp.jpg", img)
 
 
 
