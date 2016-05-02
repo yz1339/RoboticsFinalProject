@@ -12,12 +12,13 @@ chairs = []
 
 def exe():
 	#found = False
+	robot = create.TetheredDriveApp()
+	robot.connect()
 	chairLegMap = []
 	currentConfigDegrees = 0
 	currentConfigTranslationX = 0
 	currentConfigTranslationY = 0
 	for i in range(1,8):
-		create.rotateRight()
 		img = webcam.takePicture()
 		legs = findLegs.findLegs(img)
 		for j in range (len(legs)):
@@ -27,7 +28,9 @@ def exe():
 			temp[1] = temp[1]+currentConfigDegrees
 			chairLegMap.append(temp)
 		#Figureout how to rotate 60 degrees
-		create.rotateRight()
+		robot.rotateRight()
+		robot.time.sleep(1)
+		robot.stop()
 		currentConfigDegrees += 60
 		#We have returned to original rotational config
 		if currentConfigDegrees == 360:
@@ -39,13 +42,13 @@ def exe():
 			if calculateSep > 0	and calculateSep < 0:
 				#Rotate to the angle of the area between the two chair leg, considering CurrentConfigDegrees
 				midAngle = (chairLegMap[a][1] + chairLegMap[b][1])/2
-				create.rotateRight()
+				robot.rotateRight()
 				#move forward the distance of the chair legs from robot + an arbitrary amount
-				create.moveForward()
+				robot.moveForward()
 
 
 exe()	
 
-		
+
 
 
