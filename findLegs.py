@@ -8,7 +8,7 @@ import separation
 
 
 
-def vote(x1, y1, voteM, ):
+def vote(x1, y1, voteM):
 	
 	# voting function
 	i = np.floor(x1/10)
@@ -25,9 +25,9 @@ def drawLegs(img, topTen):
 		y = (int(topTen[i][1]) + 1) * 5
 		cv2.circle(img, (x, y), 5, (225,0,0), -1)
 		# print(separation.convert(x,y), x, y)
-		cv2.imshow('circle',img)
-		cv2.waitKey(0)
-	cv2.destroyAllWindows()
+		# cv2.imshow('circle',img)
+		# cv2.waitKey(0)
+	# cv2.destroyAllWindows()
 
 def unionFind(topTen):
 	legs = []	
@@ -60,8 +60,8 @@ def findLegs(img):
 	# upper_hue = np.array([30,30,30])
 
 	mask = cv2.inRange(img, lower_hue, upper_hue)
-	cv2.imshow('mask', mask)
-	cv2.waitKey(0)
+	# cv2.imshow('mask', mask)
+	# cv2.waitKey(0)
 	lines = cv2.HoughLinesP(mask, 1, np.pi, 75, None, 13, 1);
 	voteM = np.zeros((128,196))
 	for x1,y1,x2,y2 in lines[0]:
@@ -74,8 +74,8 @@ def findLegs(img):
 
 
 	    		voteM = vote(x1, y1, voteM)
-	cv2.imshow('hough', img)
-	cv2.waitKey(0)
+	# cv2.imshow('hough', img)
+	# cv2.waitKey(0)
 	# get top 10 votes
 	topTen = []
 	topCX = np.zeros(10)

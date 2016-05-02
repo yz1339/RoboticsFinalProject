@@ -13,5 +13,3 @@ def takePicture():
 	    imwrite("test1.jpg",img) #save image
 	    return img
 
-
-takePicture()
