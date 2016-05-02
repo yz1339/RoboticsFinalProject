@@ -15,7 +15,9 @@ def exe():
 	while(!found)
 		create.rotateRight()
 		img = webcam.takePicture()
-		findLegs.findLegs(img)
-		
+		legs = findLegs.findLegs(img)
+
+
+
 
 

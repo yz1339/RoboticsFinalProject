@@ -14,7 +14,6 @@ def vote(x1, y1):
 	# voting function
 	i = np.floor(float(x1)/w *128)
 	j = np.floor(float(y1)/h * 192)
-	print(x1, i, y1, j)
 	voteM[i][j] = voteM[i][j] + 1;
 	pass
 
@@ -31,14 +30,29 @@ def drawLegs(img, topTen):
 	cv2.destroyAllWindows()
 
 def unionFind(topTen):
-	chairs = []
+	legs = []	
 	for i in range(0,len(topTen)):
-		
+		x = int(topTen[i][0])
 		y = int(topTen[i][1])
-	pass
+		found = False
+		for j in range(0,len(legs)):
+			for k in range(0,len(legs[j])):
+				if legs[j][k][1] == y and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
+					legs[j].append((x,y))
+					found = True
+					break
+		if not found:
+			legs.append([(x,y)])	
+	u_legs = []
+	for i in range(0,len(legs)):
+		xs = []
+		for j in range(0,len(legs[i])):	
+			xs.append(legs[i][j][0])
+		u_legs.append((np.mean(xs),legs[i][j][1]))
+	return u_legs
 
-def findLegs():
-	img = cv2.imread('chairLeg1.jpg')
+def findLegs(img):
+	# img = cv2.imread('chairLeg1.jpg')
 	# img = imresize(img,(480,640))
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	lower_hue = np.array([0,0,0])
@@ -71,13 +85,12 @@ def findLegs():
 		# topCY[i] = maxY
 		topTen.append((maxX,maxY))
 		voteM[maxX][maxY] = 0
-
-	print(topTen)
-	drawLegs(img,topTen)
+	topTen.sort()
+	# drawLegs(img,topTen)
+	unionFind(topTen)
 	# print(topCX)
 	# print(topCY)
 
-findLegs()
 
 
 

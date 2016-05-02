@@ -28,11 +28,11 @@ def convert(x, y):
 def separation(x1, y1, x2, y2):
 	(d1, a1) = convert(x1, y1)
 	(d2, a2) = convert(x2, y2)
-	return findThirdLine(d1,d2,np.abs(a1)+np.abs(a2));
+	return calThirdLine(d1,d2,np.abs(a1)+np.abs(a2));
 	pass
 
 # given two lengths of and an angle in between, calculate the thrid line in the triangle
-def findThirdLine(l1,l2,angle):
+def calThirdLine(l1,l2,angle):
 	l3 = (angle*l1 + angle*l2)/180
 	return l3
 
