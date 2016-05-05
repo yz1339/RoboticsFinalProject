@@ -25,12 +25,11 @@ def exe():
 			x = [j][0]
 			y = legs[j][1]
 			temp = separation.convert(x,y)
-			temp[1] = temp[1]+currentConfigDegrees
+			currentAngle = temp[1]
+			currentAngle = temp[1]+currentConfigDegrees
 			chairLegMap.append(temp)
 		#Figureout how to rotate 60 degrees
-		robot.rotateRight()
-		robot.time.sleep(1)
-		robot.stop()
+		robot.testDrive()
 		currentConfigDegrees += 60
 		#We have returned to original rotational config
 		if currentConfigDegrees == 360:
@@ -39,7 +38,7 @@ def exe():
 		for b in range(len(chairLegMap)):
 			calculatedSep = separation.separation(chairLegMap[a][0], chairLegMap[a][1], chairLegMap[b][0], chairLegMap[b][1])
 			#These two will be some sort of threshold values we will calculate later
-			if calculateSep > 0	and calculateSep < 0:
+			if calculatedSep > 0	and calculatedSep < 0:
 				#Rotate to the angle of the area between the two chair leg, considering CurrentConfigDegrees
 				midAngle = (chairLegMap[a][1] + chairLegMap[b][1])/2
 				robot.rotateRight()

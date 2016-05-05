@@ -96,21 +96,21 @@ class TetheredDriveApp():
             print "Failed."
 
     def testDrive(self):
-        self.moveForward()
-        time.sleep(1)
-        self.stop()
+        #self.moveForward()
+        #time.sleep(1)
+        #self.stop()
 
         self.rotateRight()
         time.sleep(0.5)
         self.stop()
 
-        self.rotateLeft()
-        time.sleep(0.5)
-        self.stop()
+        # self.rotateLeft()
+        # time.sleep(0.5)
+        # self.stop()
 
-        self.moveBackward()
-        time.sleep(1)
-        self.stop()
+        # self.moveBackward()
+        # time.sleep(1)
+        # self.stop()
     
     def moveForward(self):
         # compute left and right wheel velocities
