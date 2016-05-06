@@ -32,11 +32,22 @@ def moveBetweenLegsShort(leg1, leg2, robot_x, robot_y, robot_angle):
 	d_mid_y = mid_y - robot_y
 
 	distanceToGo = np.sqrt(np.square(d_mid_x) + np.square(d_mid_y))
-	if mid_x > 0:
-		angle = np.arccos(mid_y / distanceToGo) / np.pi * 180 - robot_angle
-	elif mid_x < 0:
-		angle = np.arccos(mid_y / distanceToGo) / np.pi * 180 + robot_angle
-		 
+	if d_mid_x > 0:
+		angle = np.arccos(d_mid_y / distanceToGo) / np.pi * 180 - robot_angle
+	elif d_mid_x < 0:
+		angle = np.arccos(d_mid_y / distanceToGo) / np.pi * 180 + robot_angle
+		if d_mid_y > 0:
+			angle = -angle
+		else:
+			angel = 360 - angle
+	else:
+		if d_mid_y > 0:
+			angleToTurn = -robot_angle
+		elif d_mid_y < 0:
+			angleToTurn = 180 - robot_angle
+		else:
+			print("WE ARE IN THE MIDDLE OF TWO LEGS!!")
+
 	return distanceToGo, angleToTurn
 
 def exe():
@@ -65,16 +76,33 @@ def exe():
 		#We have returned to original rotational config
 		if currentConfigDegrees == 360:
 			currentConfigDegrees = 0
-	# for a in range(len(chairLegMap)):
-	# 	for b in range(len(chairLegMap)):
-	# 		calculatedSep = separation.separation(chairLegMap[a][0], chairLegMap[a][1], chairLegMap[b][0], chairLegMap[b][1])
-	# 		#These two will be some sort of threshold values we will calculate later
-	# 		if calculatedSep > 0	and calculatedSep < 0:
-	# 			#Rotate to the angle of the area between the two chair leg, considering currentConfigDegrees
-	# 			midAngle = (chairLegMap[a][1] + chairLegMap[b][1])/2
-	# 			robot.rotateRight()
-	# 			#move forward the distance of the chair legs from robot + an arbitrary amount
-	# 			robot.moveForward()
+	# After the robot find all the chair legs possible at this position, we have a map of the legs, it 
+	# will try to go to the middle of the two legs. 
+	if len(chairLegMap) < 2:
+		print("THERE IS ONLY ONE LEG!!")
+
+	# for i in range(0, len(chairLegMap)-1):
+	# 	for j in range(i,len(chairLegMap)):
+			# separationBtwLegs = np.sqrt(np.square(chairLegMap[i][0]-chairLegMap[j][0]) + np.square(chairLegMap[i][1]-chairLegMap[j][1]))
+			# #These two will be some sort of threshold values we will calculate later
+			# if separationBtwLegs > 0 and separationBtwLegs < 0:
+			# 	#Rotate to the angle of the area between the two chair leg, considering currentConfigDegrees
+			# 	midAngle = (chairLegMap[a][1] + chairLegMap[b][1])/2
+			# 	robot.rotateRight()
+			# 	#move forward the distance of the chair legs from robot + an arbitrary amount
+			# 	robot.moveForward()
+	else:
+		distanceToGo, angleToTurn = moveBetweenLegsShort(chairLegMap[0], chairLegMap[1], currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
+		if angleToTurn < 0:
+			robot.rotate(np.abs(angleToTurn),'left')
+			currentConfigDegrees -= angleToTurn
+		else:
+			robot.rotate(angleToTurn, 'right')
+			currentConfigDegrees += angleToTurn
+		robot.move(distanceToGo, 'forward')
+		currentConfigTranslationX = (chairLegMap[0][0] + chairLegMap[1][0]) / 2
+		currentConfigTranslationY = (chairLegMap[0][1] + chairLegMap[1][1]) / 2
+		print('PARK AT: ', currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
 
 
 exe()	
