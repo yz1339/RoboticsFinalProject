@@ -81,8 +81,8 @@ def exe():
 	if len(chairLegMap) < 2:
 		print("THERE IS ONLY ONE LEG!!")
 
-	for i in range(0, len(chairLegMap)-1):
-		for j in range(i,len(chairLegMap)):
+	# for i in range(0, len(chairLegMap)-1):
+	# 	for j in range(i,len(chairLegMap)):
 			# separationBtwLegs = np.sqrt(np.square(chairLegMap[i][0]-chairLegMap[j][0]) + np.square(chairLegMap[i][1]-chairLegMap[j][1]))
 			# #These two will be some sort of threshold values we will calculate later
 			# if separationBtwLegs > 0 and separationBtwLegs < 0:
@@ -91,9 +91,18 @@ def exe():
 			# 	robot.rotateRight()
 			# 	#move forward the distance of the chair legs from robot + an arbitrary amount
 			# 	robot.moveForward()
-			distanceToGo, angleToTurn = moveBetweenLegsShort(chairLegMap[i], chairLegMap[j], currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
-			if angleToTurn < 0:
-				
+	else:
+		distanceToGo, angleToTurn = moveBetweenLegsShort(chairLegMap[0], chairLegMap[1], currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
+		if angleToTurn < 0:
+			robot.rotate(np.abs(angleToTurn),'left')
+			currentConfigDegrees -= angleToTurn
+		else:
+			robot.rotate(angleToTurn, 'right')
+			currentConfigDegrees += angleToTurn
+		robot.move(distanceToGo, 'forward')
+		currentConfigTranslationX = (chairLegMap[0][0] + chairLegMap[1][0]) / 2
+		currentConfigTranslationY = (chairLegMap[0][1] + chairLegMap[1][1]) / 2
+		print('PARK AT: ', currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
 
 
 exe()	
