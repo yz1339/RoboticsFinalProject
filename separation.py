@@ -24,7 +24,7 @@ def convert(x, y):
 	return (distance, angle)
 
 
-# calculate distance between two chair legs 
+# calculate distance between two chair legs based on image 
 def separation(x1, y1, x2, y2):
 	(d1, a1) = convert(x1, y1)
 	(d2, a2) = convert(x2, y2)
