@@ -13,11 +13,11 @@ except ImportError:
 
 connection = None
 
-TEXTWIDTH = 40 # window width, in characters
+TEXTWIDTH =  40 # window width, in characters
 TEXTHEIGHT = 16 # window height, in lines
 
 VELOCITYCHANGE = 100
-ROTATIONCHANGE = 150
+ROTATIONCHANGE = 200
 
 class TetheredDriveApp():
     # sendCommandASCII takes a string of whitespace-separated,
@@ -36,8 +36,7 @@ class TetheredDriveApp():
         try:
             if connection is not None:
                 connection.write(command)
-            else:     
-                print "lol"
+            else:    
                 print "Not connected."
         except serial.SerialException:
             print "Lost connection"
@@ -95,18 +94,30 @@ class TetheredDriveApp():
         except:
             print "Failed."
 
+
+    def rotate(self,degrees, leftOrRight):
+        if leftOrRight.lower() == "right":
+            self.rotateRight()
+            time.sleep((0.018185)*degrees)
+            self.stop()
+        else:
+             self.rotateLeft()
+             time.sleep((0.018185)*degrees)
+             self.stop()
+
     def testDrive(self):
         #self.moveForward()
         #time.sleep(1)
         #self.stop()
 
-        self.rotateRight()
-        time.sleep(0.5)
-        self.stop()
+        self.rotate(60,"right")
+        #self.rotateRight()
+        #time.sleep(1.08)
+        #self.stop()
 
-        # self.rotateLeft()
-        # time.sleep(0.5)
-        # self.stop()
+         # self.rotateLeft()
+         # time.sleep(1.08)
+         # self.stop()
 
         # self.moveBackward()
         # time.sleep(1)

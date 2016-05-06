@@ -65,11 +65,14 @@ def exe():
 			x = [j][0]
 			y = legs[j][1]
 			distance, angle = separation.convert(x,y)
+
 			currentAngle = angle + currentConfigDegrees
 			chairLegMap = updateLegMap(chairLegMap, distance, angle, currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
+
 		#Figureout how to rotate 60 degrees
 		robot.testDrive()
 		currentConfigDegrees += 60
+		print currentConfigDegrees
 		#We have returned to original rotational config
 		if currentConfigDegrees == 360:
 			currentConfigDegrees = 0
