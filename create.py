@@ -36,8 +36,7 @@ class TetheredDriveApp():
         try:
             if connection is not None:
                 connection.write(command)
-            else:     
-                print "lol"
+            else:    
                 print "Not connected."
         except serial.SerialException:
             print "Lost connection"
