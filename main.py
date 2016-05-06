@@ -18,19 +18,19 @@ def exe():
 	currentConfigDegrees = 0
 	currentConfigTranslationX = 0
 	currentConfigTranslationY = 0
-	for i in range(1,8):
+	for i in range(0,6):
 		img = webcam.takePicture()
 		legs = findLegs.findLegs(img)
 		for j in range (len(legs)):
 			x = [j][0]
 			y = legs[j][1]
-			temp = separation.convert(x,y)
-			currentAngle = temp[1]
-			currentAngle = temp[1]+currentConfigDegrees
-			chairLegMap.append(temp)
+			distance, angle = separation.convert(x,y)
+			currentAngle = angle+currentConfigDegrees
+			chairLegMap.append((distance,angle))
 		#Figureout how to rotate 60 degrees
 		robot.testDrive()
 		currentConfigDegrees += 60
+		print currentConfigDegrees
 		#We have returned to original rotational config
 		if currentConfigDegrees == 360:
 			currentConfigDegrees = 0
