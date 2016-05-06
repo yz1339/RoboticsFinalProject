@@ -104,13 +104,23 @@ class TetheredDriveApp():
              self.rotateLeft()
              time.sleep((0.018185)*degrees)
              self.stop()
+    def move(self, cm, forwardOrBackward):
+        if forwardOrBackward.lower() == "forward":
+            self.moveForward()
+            time.sleep((0.1)*cm)
+            self.stop()
+        else:
+            self.moveBackward()
+            time.sleep((0.1)*cm)
+            self.stop()
 
+        
     def testDrive(self):
         #self.moveForward()
         #time.sleep(1)
         #self.stop()
 
-        self.rotate(60,"right")
+        self.rotate(360,"right")
         #self.rotateRight()
         #time.sleep(1.08)
         #self.stop()
