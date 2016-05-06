@@ -58,7 +58,7 @@ def exe():
 	currentConfigDegrees = 0
 	currentConfigTranslationX = 0
 	currentConfigTranslationY = 0
-	for i in range(0,6):
+	for i in range(0,9):
 		img = webcam.takePicture()
 		legs = findLegs.findLegs(img)
 		for j in range (len(legs)):

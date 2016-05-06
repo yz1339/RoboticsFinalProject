@@ -120,7 +120,7 @@ class TetheredDriveApp():
         #time.sleep(1)
         #self.stop()
 
-        self.rotate(60,"right")
+        self.rotate(40,"right")
         #self.rotateRight()
         #time.sleep(1.08)
         #self.stop()
