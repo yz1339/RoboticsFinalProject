@@ -61,6 +61,7 @@ def exe():
 	for i in range(0,9):
 		img = webcam.takePicture()
 		legs = findLegs.findLegs(img)
+<<<<<<< HEAD
 		print legs
 		if legs is not "none":
 			print "Length"
@@ -78,6 +79,16 @@ def exe():
 				chairLegMap = updateLegMap(chairLegMap, distance, angle, currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
 				print "Chair Map:"
 				print chairLegMap
+=======
+		for j in range (len(legs)):
+			x = legs[j][0]
+			y = legs[j][1]
+			distance, angle = separation.convert(x,y)
+			if angle > 20 or distance == 0:
+				continue
+			chairLegMap = updateLegMap(chairLegMap, distance, angle, currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
+
+>>>>>>> 143859270c4e1eb74e2b39b0f439929116c74371
 		#Figureout how to rotate 60 degrees
 		robot.testDrive()
 		currentConfigDegrees += 40
