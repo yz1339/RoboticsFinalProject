@@ -37,7 +37,7 @@ def unionFind(topTen):
 		found = False
 		for j in range(0,len(legs)):
 			for k in range(0,len(legs[j])):
-				if legs[j][k][1] == y and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
+				if y <= legs[j][k][1] - 2 and y <= legs[j][k][1] + 2 and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
 					legs[j].append((x,y))
 					found = True
 					break
@@ -46,9 +46,11 @@ def unionFind(topTen):
 	u_legs = []
 	for i in range(0,len(legs)):
 		xs = []
+		ys = []
 		for j in range(0,len(legs[i])):	
 			xs.append(legs[i][j][0])
-		u_legs.append((np.mean(xs),legs[i][j][1]))
+			ys.append(legs[i][j][1])
+		u_legs.append((np.mean(xs),np.mean(ys)))
 	return u_legs
 
 def findLegs(img):

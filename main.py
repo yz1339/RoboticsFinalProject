@@ -65,7 +65,7 @@ def exe():
 			x = legs[j][0]
 			y = legs[j][1]
 			distance, angle = separation.convert(x,y)
-			if angle > 20:
+			if angle > 20 or distance == 0:
 				continue
 			chairLegMap = updateLegMap(chairLegMap, distance, angle, currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
 
