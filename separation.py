@@ -9,7 +9,7 @@ img_width = len(img[0])
 
 ZERO_ANGLE_MARK = 657
 LEFT_ANGLE_MARK = 130
-RIGHT_ANGEL_MARK = 1184
+RIGHT_ANGLE_MARK = 1184
 # x = 130 is -20 degree, x = 657 is 0 degree, x = 1184 is 20 degree
 # We need to remeasure again to get rid of error and include more pixels
 
@@ -19,7 +19,9 @@ def convert(x, y):
 	distance = img[y,img_height-x][0]
 	#distance = img[x,y][0]
 	angle = 25
-	if x <= RIGHT_ANGEL_MARK and x >= LEFT_ANGLE_MARK:
+	print('x and y: ', x, y)
+	if x <= RIGHT_ANGLE_MARK and x >= LEFT_ANGLE_MARK:
+		print('2 x and y: ', x, y)
 		angle = np.floor((x - ZERO_ANGLE_MARK) * 20 / np.abs(ZERO_ANGLE_MARK - LEFT_ANGLE_MARK))
 	return (distance, angle)
 

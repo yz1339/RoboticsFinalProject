@@ -25,8 +25,8 @@ def drawLegs(img, topTen):
 		y = (int(topTen[i][1]) + 1) * 5
 		cv2.circle(img, (x, y), 5, (225,0,0), -1)
 		# print(separation.convert(x,y), x, y)
-		# cv2.imshow('circle',img)
-		# cv2.waitKey(0)
+	cv2.imshow('circle',img)
+	cv2.waitKey(0)
 	# cv2.destroyAllWindows()
 
 def unionFind(topTen):
@@ -64,18 +64,17 @@ def findLegs(img):
 	# cv2.waitKey(0)
 	lines = cv2.HoughLinesP(mask, 1, np.pi, 75, None, 13, 1);
 	voteM = np.zeros((128,196))
+	if lines is None:
+		return "none"
 	for x1,y1,x2,y2 in lines[0]:
 	    angle = np.arctan2(y2 - y1, x2 - x1) * 180. / np.pi
 	    if angle != 0:
 	    		cv2.line(img,(x1,y1),(x2,y2),(0,255,0),1)
-	    		print(x1,y1)
-
-
-
-
-	    		voteM = vote(x1, y1, voteM)
-	# cv2.imshow('hough', img)
-	# cv2.waitKey(0)
+	    		# print(x1,y1)
+	    		if y1 > 220:	
+	    			voteM = vote(x1, y1, voteM)
+	cv2.imshow('hough', img)
+	cv2.waitKey(0)
 	# get top 10 votes
 	topTen = []
 	topCX = np.zeros(10)
