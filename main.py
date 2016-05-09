@@ -20,7 +20,21 @@ def updateLegMap(chairLegMap, chair_dis, chair_angle, robot_x, robot_y, robot_an
 	if not found:
 		chairLegMap.append((chair_x, chair_y))
 	return chairLegMap
-
+def moveTo(aim_x, aim_y, robot_x, robot_y, robot_angle):
+	d_aim_x = aim_x - robot_x
+	d_aim_y = aim_y - robot_y
+	angle = 0
+	distanceToGo = np.sqrt(np.square(d_aim_x) + np.square(d_aim_y))
+	if aim_x > 0:
+		angle = np.arccos(d_aim_y / distanceToGo) / np.pi * 180 - robot_angle
+	else:
+		angle = -np.arccos(d_aim_y / distanceToGo) / np.pi * 180 - robot_angle
+	if angle > 180:
+		angle -= 360
+	elif angle < -180:
+		angle += 360	
+	return distanceToGo, angle
+	pass
 def moveBetweenLegsShort(leg1, leg2, robot_x, robot_y, robot_angle):
 	leg1_x = leg1[0]
 	leg1_y = leg1[1]
@@ -28,10 +42,6 @@ def moveBetweenLegsShort(leg1, leg2, robot_x, robot_y, robot_angle):
 	leg2_y = leg2[1]
 	mid_x = (leg1_x + leg2_x) / 2
 	mid_y = (leg1_y + leg2_y) / 2
-	d_mid_x = mid_x - robot_x
-	d_mid_y = mid_y - robot_y
-	angle = 0
-	distanceToGo = np.sqrt(np.square(d_mid_x) + np.square(d_mid_y))
 	# if d_mid_x > 0:
 	# 	angle = np.arccos(d_mid_y / distanceToGo) / np.pi * 180 - robot_angle
 	# elif d_mid_x < 0:
@@ -47,16 +57,7 @@ def moveBetweenLegsShort(leg1, leg2, robot_x, robot_y, robot_angle):
 	# 		angle = 180 - robot_angle
 	# 	else:
 	# 		print("WE ARE IN THE MIDDLE OF TWO LEGS!!")
-	if d_mid_x > 0:
-		angle = np.arccos(d_mid_y / distanceToGo) / np.pi * 180 - robot_angle
-	else:
-		angle = -np.arccos(d_mid_y / distanceToGo) / np.pi * 180 - robot_angle
-	if angle > 180:
-		angle -= 360
-	elif angle < -180:
-		angle += 360	
-
-	return distanceToGo, angle
+	return moveTo(mid_x, mid_y, robot_x, robot_y, robot_angle)
 
 def scatterPlot(map):
 	xs = []
