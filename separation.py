@@ -18,7 +18,7 @@ RIGHT_ANGEL_MARK = 1184
 def convert(x, y):
 	distance = img[y,img_height-x][0]
 	#distance = img[x,y][0]
-	angle = 25
+	angle = 0
 	if x <= RIGHT_ANGEL_MARK and x >= LEFT_ANGLE_MARK:
 		angle = np.floor((x - ZERO_ANGLE_MARK) * 20 / np.abs(ZERO_ANGLE_MARK - LEFT_ANGLE_MARK))
 	return (distance, angle)

@@ -37,7 +37,7 @@ def unionFind(topTen):
 		found = False
 		for j in range(0,len(legs)):
 			for k in range(0,len(legs[j])):
-				if y <= legs[j][k][1] - 2 and y <= legs[j][k][1] + 2 and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
+				if y >= legs[j][k][1] - 2 and y <= legs[j][k][1] + 2 and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
 					legs[j].append((x,y))
 					found = True
 					break
@@ -53,8 +53,8 @@ def unionFind(topTen):
 		u_legs.append((np.mean(xs),np.mean(ys)))
 	return u_legs
 
-def findLegs(img):
-	# img = cv2.imread('test1.jpg')
+def findLegs():
+	img = cv2.imread('chairLeg1.jpg')
 	# img = imresize(img,(480,640))
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	lower_hue = np.array([0,0,0])
@@ -76,8 +76,8 @@ def findLegs(img):
 
 
 	    		voteM = vote(x1, y1, voteM)
-	# cv2.imshow('hough', img)
-	# cv2.waitKey(0)
+	cv2.imshow('hough', img)
+	cv2.waitKey(0)
 	# get top 10 votes
 	topTen = []
 	topCX = np.zeros(10)
@@ -104,8 +104,10 @@ def findLegs(img):
 	# print(topCY)
 
 
-
-
+legs = findLegs()
+print(legs)
+for i in range(0,len(legs)):
+	print(separation.convert(legs[i][0]*10, legs[i][1]*5))
 
 
 
