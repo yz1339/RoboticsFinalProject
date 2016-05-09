@@ -5,9 +5,6 @@ from scipy.misc import imresize
 import separation
 
 # For our matrix we are using 5 * 10 intervals
-
-
-
 def vote(x1, y1, voteM):
 	
 	# voting function
@@ -55,7 +52,7 @@ def unionFind(topTen):
 	return u_legs
 
 def findLegs():
-	img = cv2.imread('chairLeg1.jpg')
+	# img = cv2.imread('chairLeg1.jpg')
 	# img = imresize(img,(480,640))
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	lower_hue = np.array([0,0,0])
@@ -113,10 +110,10 @@ def findLegs():
 	# print(topCY)
 
 
-legs = findLegs()
-print(legs)
-for i in range(0,len(legs)):
-	print(separation.convert(legs[i][0]*10, legs[i][1]*5))
+# legs = findLegs()
+# print(legs)
+# for i in range(0,len(legs)):
+# 	print(separation.convert(legs[i][0]*10, legs[i][1]*5))
 
 
 
