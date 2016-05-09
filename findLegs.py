@@ -5,9 +5,6 @@ from scipy.misc import imresize
 import separation
 
 # For our matrix we are using 5 * 10 intervals
-
-
-
 def vote(x1, y1, voteM):
 	
 	# voting function
@@ -37,6 +34,7 @@ def unionFind(topTen):
 		found = False
 		for j in range(0,len(legs)):
 			for k in range(0,len(legs[j])):
+
 				if y <= legs[j][k][1] +2 and y >= legs[j][k][1]-2 and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
 					legs[j].append((x,y))
 					found = True
@@ -53,8 +51,8 @@ def unionFind(topTen):
 		u_legs.append((np.mean(xs)*10,np.mean(ys)*5))
 	return u_legs
 
-def findLegs(img):
-	# img = cv2.imread('test1.jpg')
+def findLegs():
+	# img = cv2.imread('chairLeg1.jpg')
 	# img = imresize(img,(480,640))
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	lower_hue = np.array([0,0,0])
@@ -72,6 +70,7 @@ def findLegs(img):
 	    angle = np.arctan2(y2 - y1, x2 - x1) * 180. / np.pi
 	    if angle != 0:
 	    		cv2.line(img,(x1,y1),(x2,y2),(0,255,0),1)
+
 	    		# print(x1,y1)
 	    		if y1 > 275:	
 	    			voteM = vote(x1, y1, voteM)
@@ -111,8 +110,10 @@ def findLegs(img):
 	# print(topCY)
 
 
-
-
+# legs = findLegs()
+# print(legs)
+# for i in range(0,len(legs)):
+# 	print(separation.convert(legs[i][0]*10, legs[i][1]*5))
 
 
 

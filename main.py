@@ -12,7 +12,6 @@ ERROR = 3
 def updateLegMap(chairLegMap, chair_dis, chair_angle, robot_x, robot_y, robot_angle):
 	chair_x = chair_dis * np.sin((robot_angle + chair_angle)/180 * np.pi) + robot_x
 	chair_y = chair_dis * np.cos((robot_angle + chair_angle)/180 * np.pi) + robot_y
-	print('chair x, chair y: ', chair_x, chair_y)
 	found = False
 	for i in range(0,len(chairLegMap)):
 		if chair_x >= chairLegMap[i][0] - ERROR and chair_x <= chairLegMap[i][0] + ERROR and chair_y >= chairLegMap[i][1] - ERROR and chair_y <= chairLegMap[i][1] + ERROR:
@@ -21,7 +20,21 @@ def updateLegMap(chairLegMap, chair_dis, chair_angle, robot_x, robot_y, robot_an
 	if not found:
 		chairLegMap.append((chair_x, chair_y))
 	return chairLegMap
-
+def moveTo(aim_x, aim_y, robot_x, robot_y, robot_angle):
+	d_aim_x = aim_x - robot_x
+	d_aim_y = aim_y - robot_y
+	angle = 0
+	distanceToGo = np.sqrt(np.square(d_aim_x) + np.square(d_aim_y))
+	if aim_x > 0:
+		angle = np.arccos(d_aim_y / distanceToGo) / np.pi * 180 - robot_angle
+	else:
+		angle = -np.arccos(d_aim_y / distanceToGo) / np.pi * 180 - robot_angle
+	if angle > 180:
+		angle -= 360
+	elif angle < -180:
+		angle += 360	
+	return distanceToGo, angle
+	pass
 def moveBetweenLegsShort(leg1, leg2, robot_x, robot_y, robot_angle):
 	leg1_x = leg1[0]
 	leg1_y = leg1[1]
@@ -29,35 +42,39 @@ def moveBetweenLegsShort(leg1, leg2, robot_x, robot_y, robot_angle):
 	leg2_y = leg2[1]
 	mid_x = (leg1_x + leg2_x) / 2
 	mid_y = (leg1_y + leg2_y) / 2
-	d_mid_x = mid_x - robot_x
-	d_mid_y = mid_y - robot_y
+	# if d_mid_x > 0:
+	# 	angle = np.arccos(d_mid_y / distanceToGo) / np.pi * 180 - robot_angle
+	# elif d_mid_x < 0:
+	# 	angle = np.arccos(d_mid_y / distanceToGo) / np.pi * 180 + robot_angle
+	# 	if d_mid_y > 0:
+	# 		angle = -angle
+	# 	else:
+	# 		angle = 360 - angle
+	# else:
+	# 	if d_mid_y > 0:
+	# 		angle = -robot_angle
+	# 	elif d_mid_y < 0:
+	# 		angle = 180 - robot_angle
+	# 	else:
+	# 		print("WE ARE IN THE MIDDLE OF TWO LEGS!!")
+	return moveTo(mid_x, mid_y, robot_x, robot_y, robot_angle)
 
-	print ("d_mid_x: ",d_mid_x," d_mid_y: ", d_mid_y)
-	angle = 0
-	distanceToGo = np.sqrt(np.square(d_mid_x) + np.square(d_mid_y))
-	if d_mid_x > 0:
-		angle = np.arccos(d_mid_y / distanceToGo) / np.pi * 180 - robot_angle
-	elif d_mid_x < 0:
-		angle = np.arccos(d_mid_y / distanceToGo) / np.pi * 180 + robot_angle
-		if d_mid_y > 0:
-			angle = -angle
-		else:
-			angle = 360 - angle
-	else:
-		if d_mid_y > 0:
-			angle = -robot_angle
-		elif d_mid_y < 0:
-			angle = 180 - robot_angle
-		else:
-			print("WE ARE IN THE MIDDLE OF TWO LEGS!!")
-
-	return distanceToGo, angle
-
+def scatterPlot(map):
+	xs = []
+	ys = []
+	for i in range(0,len(array)):
+		xs.append(array[i][0])
+		ys.append(array[i][1])
+	plt.plot(0,0,'go')
+	plt.plot(xs,ys,'ro')
+	plt.axis([-200,200,-200,200])
+	plt.show()
+	pass
 def exe():
-	#found = False
 	robot = create.TetheredDriveApp()
 	robot.connect()
 	chairLegMap = []
+	robotConfigs = []
 	currentConfigDegrees = 0
 	currentConfigTranslationX = 0
 	currentConfigTranslationY = 0
@@ -79,15 +96,12 @@ def exe():
 					continue
 				chairLegMap = updateLegMap(chairLegMap, distance, angle, currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
 
-		#Figureout how to rotate 60 degrees
 		robot.testDrive()
 		currentConfigDegrees += 40
-		# print currentConfigDegrees
 		#We have returned to original rotational config
 		if currentConfigDegrees == 360:
 			currentConfigDegrees = 0
-	print "Chair Map:"
-	print chairLegMap
+
 	# After the robot find all the chair legs possible at this position, we have a map of the legs, it 
 	# will try to go to the middle of the two legs. 
 	if len(chairLegMap) < 2:
@@ -116,6 +130,7 @@ def exe():
 		currentConfigTranslationX = (chairLegMap[2][0] + chairLegMap[1][0]) / 2
 		currentConfigTranslationY = (chairLegMap[2][1] + chairLegMap[1][1]) / 2
 		print('PARK AT: ', currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
+		scatterPlot(chairLegMap);
 
 
 exe()	

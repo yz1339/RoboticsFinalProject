@@ -17,20 +17,9 @@ RIGHT_ANGLE_MARK = 1184
 # This method convert the (x, y) pixel pair of the ending of chair leg to distance and angle
 # respective to the robot
 def convert(x, y):
-	print('NOW CONVERTING')
-
 	x1 = int(math.floor(x))
 	y1 = int(math.floor(y))
-
-
-	#distance = img[x1,img_height-y1][0]
-
 	distance = img[y1-1,x1-1][0]
-
-	
-	
-
-	#distance = img[x1,y1][0]
 	angle = 25
 	if x <= RIGHT_ANGLE_MARK and x >= LEFT_ANGLE_MARK:
 		angle = np.floor((x - ZERO_ANGLE_MARK) * 20 / np.abs(ZERO_ANGLE_MARK - LEFT_ANGLE_MARK))
@@ -48,6 +37,3 @@ def separation(x1, y1, x2, y2):
 def calThirdLine(l1,l2,angle):
 	l3 = (angle*l1 + angle*l2)/180
 	return l3
-
-
-# print(separation(190,500, 500,900))
