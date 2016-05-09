@@ -37,7 +37,7 @@ def unionFind(topTen):
 		found = False
 		for j in range(0,len(legs)):
 			for k in range(0,len(legs[j])):
-				if legs[j][k][1] == y and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
+				if y <= legs[j][k][1] +2 and y >= legs[j][k][1]-2 and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
 					legs[j].append((x,y))
 					found = True
 					break
@@ -46,9 +46,11 @@ def unionFind(topTen):
 	u_legs = []
 	for i in range(0,len(legs)):
 		xs = []
+		ys = []
 		for j in range(0,len(legs[i])):	
 			xs.append(legs[i][j][0])
-		u_legs.append((np.mean(xs),legs[i][j][1]))
+			ys.append(legs[i][j][1])
+		u_legs.append((np.mean(xs)*10,np.mean(ys)*5))
 	return u_legs
 
 def findLegs(img):
@@ -71,10 +73,10 @@ def findLegs(img):
 	    if angle != 0:
 	    		cv2.line(img,(x1,y1),(x2,y2),(0,255,0),1)
 	    		# print(x1,y1)
-	    		if y1 > 220:	
+	    		if y1 > 275:	
 	    			voteM = vote(x1, y1, voteM)
-	cv2.imshow('hough', img)
-	cv2.waitKey(0)
+	#cv2.imshow('hough', img)
+	#cv2.waitKey(0)
 	# get top 10 votes
 	topTen = []
 	topCX = np.zeros(10)
@@ -95,8 +97,16 @@ def findLegs(img):
 		topTen.append((maxX,maxY))
 		voteM[maxX][maxY] = 0
 	topTen.sort()
+
 	drawLegs(img,topTen)
-	return unionFind(topTen)
+	
+
+	test = unionFind(topTen)
+
+	print('number of legs')
+	print(len(test))
+
+	return test
 	# print(topCX)
 	# print(topCY)
 

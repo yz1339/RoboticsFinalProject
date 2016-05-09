@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import math
 
 
 img = cv2.imread('matrix/distances-gradient.jpg',cv2.IMREAD_COLOR)
@@ -16,12 +17,22 @@ RIGHT_ANGLE_MARK = 1184
 # This method convert the (x, y) pixel pair of the ending of chair leg to distance and angle
 # respective to the robot
 def convert(x, y):
-	distance = img[y,img_height-x][0]
-	#distance = img[x,y][0]
+	print('NOW CONVERTING')
+
+	x1 = int(math.floor(x))
+	y1 = int(math.floor(y))
+
+
+	#distance = img[x1,img_height-y1][0]
+
+	distance = img[y1-1,x1-1][0]
+
+	
+	
+
+	#distance = img[x1,y1][0]
 	angle = 25
-	print('x and y: ', x, y)
 	if x <= RIGHT_ANGLE_MARK and x >= LEFT_ANGLE_MARK:
-		print('2 x and y: ', x, y)
 		angle = np.floor((x - ZERO_ANGLE_MARK) * 20 / np.abs(ZERO_ANGLE_MARK - LEFT_ANGLE_MARK))
 	return (distance, angle)
 
