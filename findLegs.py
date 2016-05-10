@@ -35,7 +35,7 @@ def unionFind(topTen):
 		for j in range(0,len(legs)):
 			for k in range(0,len(legs[j])):
 
-				if y <= legs[j][k][1] +2 and y >= legs[j][k][1]-2 and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
+				if y <= legs[j][k][1] +20 and y >= legs[j][k][1]-20 and x >= legs[j][k][0] - 2 and x <= legs[j][k][0] + 2:
 					legs[j].append((x,y))
 					found = True
 					break

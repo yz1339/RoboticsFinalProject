@@ -19,7 +19,6 @@ def updateLegMap(chairLegMap, chair_dis, chair_angle, robot_x, robot_y, robot_an
 			break
 	if not found:
 		chairLegMap.append((chair_x, chair_y))
-		plt.plot(chair_x,chair_y,'ro')
 	return chairLegMap
 def moveTo(aim_x, aim_y, robot_x, robot_y, robot_angle):
 	d_aim_x = aim_x - robot_x
@@ -72,6 +71,7 @@ def scatterPlot(array):
 	plt.show()
 	pass
 def exe():
+	
 	robot = create.TetheredDriveApp()
 	robot.connect()
 	chairLegMap = []
@@ -129,13 +129,9 @@ def exe():
 		robot.move(distanceToGo, 'forward')
 		currentConfigTranslationX = (chairLegMap[2][0] + chairLegMap[4][0]) / 2
 		currentConfigTranslationY = (chairLegMap[2][1] + chairLegMap[4][1]) / 2
-		print('PARK AT: ', currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
-		# scatterPlot(chairLegMap);
-		plt.plot(0,0,'go')
 		plt.plot(currentConfigTranslationX, currentConfigTranslationY,'bo')
-		plt.axis([-200,200,-200,200])
-		plt.show()
-
+		print('PARK AT: ', currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
+		scatterPlot(chairLegMap);
 
 exe()	
 
