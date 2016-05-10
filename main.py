@@ -60,7 +60,7 @@ def moveBetweenLegsShort(leg1, leg2, robot_x, robot_y, robot_angle):
 	# 		print("WE ARE IN THE MIDDLE OF TWO LEGS!!")
 	return moveTo(mid_x, mid_y, robot_x, robot_y, robot_angle)
 
-def scatterPlot(map):
+def scatterPlot(array):
 	xs = []
 	ys = []
 	for i in range(0,len(array)):
