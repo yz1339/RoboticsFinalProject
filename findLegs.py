@@ -51,7 +51,7 @@ def unionFind(topTen):
 		u_legs.append((np.mean(xs)*10,np.mean(ys)*5))
 	return u_legs
 
-def findLegs():
+def findLegs(img):
 	
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	lower_hue = np.array([0,0,0])
@@ -86,7 +86,8 @@ def findLegs():
 					maxVote = voteM[x][y]
 					maxX = x
 					maxY = y
-	
+		if maxX == 0 and maxY == 0:
+			return "none"
 		topTen.append((maxX,maxY))
 		voteM[maxX][maxY] = 0
 	topTen.sort()
