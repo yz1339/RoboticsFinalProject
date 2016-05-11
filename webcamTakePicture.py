@@ -9,7 +9,7 @@ def takePicture():
 	    namedWindow("cam-test",CV_WINDOW_AUTOSIZE)
 	    # imshow("cam-test",img)
 	    # waitKey(0)
-	    # destroyWindow("cam-test")
+	    destroyWindow("cam-test")
 	    imwrite("test_webcam.jpg",img) #save image
 	    return img
 

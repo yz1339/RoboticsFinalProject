@@ -10,7 +10,7 @@ import webcamTakePicture as webcam
 ERROR = 3
 #ChairLeg: 47-56 cm
 
-def separationBtwLegs(leg1, leg2):
+def separationCal(leg1, leg2):
 	leg1_x = leg1[0]
 	leg1_y = leg1[1]
 	leg2_x = leg2[0]
@@ -57,10 +57,10 @@ def scatterPlot(array):
 	for i in range(0,len(array)):
 		xs.append(array[i][0])
 		ys.append(array[i][1])
-	plt.plot(0,0,'go')
+	# plt.plot(0,0,'go')
 	plt.plot(xs,ys,'ro')
-	plt.axis([-200,200,-200,200])
-	plt.show()
+	# plt.axis([-200,200,-200,200])
+	# plt.show()
 	pass
 
 def imageProcessing(chairLegMap):
@@ -71,9 +71,9 @@ def imageProcessing(chairLegMap):
 			x = legs[j][0]
 			y = legs[j][1]
 	
-			cv2.circle(img, (int(x), int(y)), 5, (0,225,225), -1)
-			cv2.imshow('circle',img)
-			cv2.waitKey(0)
+			# cv2.circle(img, (int(x), int(y)), 5, (0,225,225), -1)
+			# cv2.imshow('circle',img)
+			# cv2.waitKey(0)
 
 			distance, angle = separation.convert(x,y)
 			# print ('angle, distance: ', angle, distance) 
@@ -119,9 +119,14 @@ def exe():
 	if len(chairLegMap) < 2:
 		print("THERE IS ONLY ONE LEG!!")
 	else:
+		park = False
 		for i in range(0, len(chairLegMap)-1):
+			if park:
+				break
 			for j in range(i,len(chairLegMap)):
-				separationBtwLegs = separationBtwLegs(chairLegMap[i], chairLegMap[j])
+				if park:
+					break
+				separationBtwLegs = separationCal(chairLegMap[i], chairLegMap[j])
 				if separationBtwLegs < 56 and separationBtwLegs > 46:
 					distanceToGo, angleToTurn = moveBetweenLegsShort(chairLegMap[i], chairLegMap[j], currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
 					if angleToTurn < 0:
@@ -156,13 +161,17 @@ def exe():
 										d = 30
 									else:
 										d = distanceToGo
+										park = True
+
 									robot.move(d, 'forward')
 									distanceToGo -= d
 									currentConfigTranslationX = d * np.sin((currentConfigDegrees + angleToTurn)/180 * np.pi) + currentConfigTranslationX
 									currentConfigTranslationY = d * np.cos((currentConfigDegrees + angleToTurn)/180 * np.pi) + currentConfigTranslationY
-					
+			
+									
+						
 
-
+		print('PARK? ', park)
 		# distanceToGo, angleToTurn = moveBetweenLegsShort(chairLegMap[2], chairLegMap[4], currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
 		
 		# currentConfigDegrees += angleToTurn
@@ -170,13 +179,13 @@ def exe():
 		# currentConfigTranslationX = (chairLegMap[2][0] + chairLegMap[4][0]) / 2
 		# currentConfigTranslationY = (chairLegMap[2][1] + chairLegMap[4][1]) / 2
 		# print('PARK AT: ', currentConfigTranslationX, currentConfigTranslationY, currentConfigDegrees)
-		# scatterPlot(chairLegMap);
+		scatterPlot(chairLegMap);
 		plt.plot(0,0,'go')
-		# plt.plot(currentConfigTranslationX, currentConfigTranslationY,'bo')
+		plt.plot(currentConfigTranslationX, currentConfigTranslationY,'bo')
 		plt.axis([-200,200,-200,200])
 		plt.show()
+		cv2.destroyAllWindows()
 
->>>>>>> a762fd956526fc22fa0a59969cc54c8ce7d96756
 
 exe()	
 
